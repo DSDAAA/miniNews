@@ -1,6 +1,7 @@
 package com.dunston.mininews.controller;
 
 import com.dunston.mininews.common.Result;
+import com.dunston.mininews.common.ResultCodeEnum;
 import com.dunston.mininews.domain.NewsUser;
 import com.dunston.mininews.domain.request.NewsUserLoginRequest;
 import com.dunston.mininews.service.NewsUserService;
@@ -31,13 +32,16 @@ public class NewsUserController {
     public Result<NewsUser> login(@RequestBody NewsUserLoginRequest userLoginRequest, HttpServletRequest request) {
         //1.判断是否为空
         if (userLoginRequest == null) {
-            return null;
+            return Result.build(null, ResultCodeEnum.NOTLOGIN.getCode(), ResultCodeEnum.NOTLOGIN.getMessage());
         }
         String username = userLoginRequest.getUsername();
         String password = userLoginRequest.getUserPwd();
         //2.用户名和密码任意判断为空
-        if (StringUtils.isAnyBlank(username, password)) {
-            return null;
+        if (username.equals("")) {
+            return Result.build(null, ResultCodeEnum.USERNAME_ERROR);
+        }
+        if (password.equals("")) {
+            return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         }
         NewsUser result = newsUserService.login(username, password, request);
         return Result.ok(result);

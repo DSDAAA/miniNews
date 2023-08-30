@@ -7,10 +7,26 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * @author 13180
+ * @author dunston
  * @description 针对表【news_user】的数据库操作Service
  * @createDate 2023-08-30 18:35:08
  */
 public interface NewsUserService extends IService<NewsUser> {
-    NewsUser login(NewsUserLoginRequest newsUserLoginRequest);
+    /**
+     * 用户登录
+     *
+     * @param username
+     * @param userpassword
+     * @param request
+     * @return
+     */
+    NewsUser login(String username, String userpassword, HttpServletRequest request);
+
+    /**
+     * 用户脱敏
+     *
+     * @param orginUser
+     * @return
+     */
+    public NewsUser getSaftyUser(NewsUser orginUser);
 }

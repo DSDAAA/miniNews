@@ -1,5 +1,10 @@
 package com.dunston.mininews.common;
 
+/**
+ * 返回信息Code编码
+ *
+ * @author dunston
+ */
 public enum ResultCodeEnum {
 
     SUCCESS(200,"success"),

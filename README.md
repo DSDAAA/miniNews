@@ -9,11 +9,13 @@
 ## 数据库
 MySQL 8.0
 ## 技术选型
-SpringBoot 3.1.2
-Spring 6.0.5
-SpringMVC
+- SpringBoot 3.1.2
+- Spring 6.0.5
+- SpringMVC
 ## 持久层框架
-Mybatis
-Mybatis-plus
+- Mybatis
+- Mybatis-plus 3.5.3.1
 ## 加密方式
-MD5
+- MD5
+## 项目构建工具
+- Gradle

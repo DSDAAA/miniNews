@@ -6,6 +6,7 @@
 - Spring Web
 - Spring Configuration Processor
 - MySQL Driver
+- Apache StringUtils
 ## 数据库
 MySQL 8.0
 ## 技术选型

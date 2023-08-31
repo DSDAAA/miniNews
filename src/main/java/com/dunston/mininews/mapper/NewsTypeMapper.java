@@ -1,4 +1,4 @@
-package generator.mapper;
+package com.dunston.mininews.mapper;
 
 import generator.domain.NewsType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

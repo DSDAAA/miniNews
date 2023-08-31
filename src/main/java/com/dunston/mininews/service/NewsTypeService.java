@@ -1,4 +1,4 @@
-package generator.service;
+package com.dunston.mininews.service;
 
 import generator.domain.NewsType;
 import com.baomidou.mybatisplus.extension.service.IService;

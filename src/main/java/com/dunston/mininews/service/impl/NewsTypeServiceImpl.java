@@ -1,9 +1,9 @@
-package generator.service.impl;
+package com.dunston.mininews.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import generator.domain.NewsType;
-import generator.service.NewsTypeService;
-import generator.mapper.NewsTypeMapper;
+import com.dunston.mininews.service.NewsTypeService;
+import com.dunston.mininews.mapper.NewsTypeMapper;
 import org.springframework.stereotype.Service;
 
 /**

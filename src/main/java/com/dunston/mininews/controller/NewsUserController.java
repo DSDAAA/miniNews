@@ -7,7 +7,6 @@ import com.dunston.mininews.domain.request.NewsUserLoginRequest;
 import com.dunston.mininews.service.NewsUserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -45,5 +44,9 @@ public class NewsUserController {
         }
         NewsUser result = newsUserService.login(username, password, request);
         return Result.ok(result);
+    }
+    @GetMapping("/getUserInfo")
+    public Result getLoginUserInfo(){
+        return null;
     }
 }

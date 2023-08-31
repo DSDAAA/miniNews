@@ -6,13 +6,9 @@ import com.dunston.mininews.common.ResultCodeEnum;
 import com.dunston.mininews.domain.NewsUser;
 import com.dunston.mininews.domain.request.NewsUserLoginRequest;
 import com.dunston.mininews.domain.request.NewsUserRegisterRequest;
-import com.dunston.mininews.exception.BusinessException;
 import com.dunston.mininews.service.NewsUserService;
-import com.dunston.mininews.utils.JwtHelper;
-import com.dunston.mininews.utils.WebUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

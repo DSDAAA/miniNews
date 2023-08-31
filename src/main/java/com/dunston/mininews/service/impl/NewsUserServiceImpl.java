@@ -1,12 +1,12 @@
 package com.dunston.mininews.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.SelectOne;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dunston.mininews.common.Result;
 import com.dunston.mininews.domain.NewsUser;
 import com.dunston.mininews.service.NewsUserService;
 import com.dunston.mininews.mapper.NewsUserMapper;
+import com.dunston.mininews.utils.JwtHelper;
 import com.dunston.mininews.utils.MD5Util;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,10 +30,10 @@ public class NewsUserServiceImpl extends ServiceImpl<NewsUserMapper, NewsUser>
      * @param username
      * @param userpassword
      * @param request
-     * @return
+     * @return token
      */
     @Override
-    public NewsUser login(String username, String userpassword, HttpServletRequest request) {
+    public String login(String username, String userpassword, HttpServletRequest request) {
         //1.根据用户名判断用户是否存在
         //todo 用户名密码长度格式校验判断
         QueryWrapper<NewsUser> queryWrapper = new QueryWrapper<>();
@@ -50,9 +50,11 @@ public class NewsUserServiceImpl extends ServiceImpl<NewsUserMapper, NewsUser>
         }
         //4.用户脱敏
         NewsUser saftUser = getSaftyUser(newsUser);
-        //5.返回用户登录态
+        //5.JWT对用户信息进行加密并获取token
+        String token = JwtHelper.createToken(Long.valueOf(saftUser.getUid()));
+        //6.返回用户登录态
         request.getSession().setAttribute(Result.ok(saftUser).getMessage(), saftUser);
-        return saftUser;
+        return token;
     }
 
     /**

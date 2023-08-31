@@ -4,14 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
- *
  * @TableName news_user
  */
-@TableName(value ="news_user")
+@TableName(value = "news_user")
 @Data
 public class NewsUser implements Serializable {
     /**
@@ -51,9 +52,9 @@ public class NewsUser implements Serializable {
         }
         NewsUser other = (NewsUser) that;
         return (this.getUid() == null ? other.getUid() == null : this.getUid().equals(other.getUid()))
-            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
-            && (this.getUser_pwd() == null ? other.getUser_pwd() == null : this.getUser_pwd().equals(other.getUser_pwd()))
-            && (this.getNick_name() == null ? other.getNick_name() == null : this.getNick_name().equals(other.getNick_name()));
+                && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
+                && (this.getUser_pwd() == null ? other.getUser_pwd() == null : this.getUser_pwd().equals(other.getUser_pwd()))
+                && (this.getNick_name() == null ? other.getNick_name() == null : this.getNick_name().equals(other.getNick_name()));
     }
 
     @Override

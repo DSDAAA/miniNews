@@ -23,10 +23,40 @@ public interface NewsUserService extends IService<NewsUser> {
     String login(String username, String userpassword, HttpServletRequest request);
 
     /**
+     * 根据token获取完整用户信息
+     *
+     * @param request
+     * @return user
+     */
+    NewsUser getUserInfo(HttpServletRequest request);
+
+    /**
      * 用户脱敏
      *
      * @param orginUser
-     * @return
+     * @return NewsUser
      */
     public NewsUser getSaftyUser(NewsUser orginUser);
+
+    /**
+     * 校验用户名是否唯一
+     *
+     * @param username
+     * @param request
+     * @return
+     */
+    public Boolean checkUserNameAllPath(String username, HttpServletRequest request);
+
+    public Boolean checkUserName(String username);
+
+    /**
+     * 用户注册请求
+     *
+     * @param username
+     * @param userPwd
+     * @param nickName
+     * @param request
+     * @return
+     */
+    public NewsUser regist(String username, String userPwd, String nickName, HttpServletRequest request);
 }

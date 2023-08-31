@@ -4,15 +4,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/**
- * 用户登录请求封装类
- *
- * @author dunston
- */
 @Data
-public class NewsUserLoginRequest implements Serializable {
+public class NewsUserRegisterRequest implements Serializable {
     private static final long serialVersionUID = 31912417163120793L;
     private String username;
     private String userPwd;
-    private long uid;
+    private String nickName;
 }

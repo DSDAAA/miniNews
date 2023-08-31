@@ -7,6 +7,7 @@
 - Spring Configuration Processor
 - MySQL Driver
 - Apache StringUtils
+- javaXb-api
 ## 数据库
 MySQL 8.0
 ## 技术选型

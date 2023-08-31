@@ -20,3 +20,5 @@ MySQL 8.0
 - MD5
 ## 项目构建工具
 - Gradle
+## 日志
+- Slf4j

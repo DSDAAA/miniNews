@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dunston.mininews.mapper.NewsTypeMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.NewsType">
+    <resultMap id="BaseResultMap" type="com.dunston.mininews.domain.NewsType">
             <id property="tid" column="tid" jdbcType="INTEGER"/>
             <result property="tname" column="tname" jdbcType="VARCHAR"/>
     </resultMap>

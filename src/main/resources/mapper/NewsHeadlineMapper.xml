@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dunston.mininews.mapper.NewsHeadlineMapper">
+
+    <resultMap id="BaseResultMap" type="com.dunston.mininews.domain.NewsHeadline">
+            <id property="hid" column="hid" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="article" column="article" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="publisher" column="publisher" jdbcType="INTEGER"/>
+            <result property="page_views" column="page_views" jdbcType="INTEGER"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="is_deleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        hid,title,article,
+        type,publisher,page_views,
+        create_time,update_time,is_deleted
+    </sql>
+</mapper>

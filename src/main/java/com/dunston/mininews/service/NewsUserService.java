@@ -18,9 +18,9 @@ public interface NewsUserService extends IService<NewsUser> {
      * @param username
      * @param userpassword
      * @param request
-     * @return
+     * @return token
      */
-    NewsUser login(String username, String userpassword, HttpServletRequest request);
+    String login(String username, String userpassword, HttpServletRequest request);
 
     /**
      * 用户脱敏

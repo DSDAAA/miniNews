@@ -2,6 +2,7 @@ package com.dunston.mininews.service;
 
 import com.dunston.mininews.domain.NewsUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.dunston.mininews.domain.request.NewsUserInfoRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -26,7 +27,7 @@ public interface NewsUserService extends IService<NewsUser> {
      * @param request
      * @return user
      */
-    NewsUser getUserInfo(HttpServletRequest request);
+    NewsUserInfoRequest getUserInfo(HttpServletRequest request);
 
     /**
      * 用户脱敏

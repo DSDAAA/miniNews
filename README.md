@@ -1,7 +1,7 @@
 # miniNews
-微头条项目初始化
+微头条项目技术说明（请fork到个人仓库之后再提交代码）
 ## 后端已经完善并测试过所有接口
-- 一个人独立完成
+- Dunston独立完成
 ## 项目依赖Dependencies
 - Lombok
 - Spring Boot DevTools

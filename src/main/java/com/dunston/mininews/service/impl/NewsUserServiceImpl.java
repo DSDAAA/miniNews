@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dunston.mininews.common.Result;
 import com.dunston.mininews.common.ResultCodeEnum;
 import com.dunston.mininews.domain.NewsUser;
+import com.dunston.mininews.domain.request.NewsUserInfoRequest;
 import com.dunston.mininews.exception.BusinessException;
 import com.dunston.mininews.service.NewsUserService;
 import com.dunston.mininews.mapper.NewsUserMapper;
@@ -55,7 +56,7 @@ public class NewsUserServiceImpl extends ServiceImpl<NewsUserMapper, NewsUser>
         //5.JWT对用户信息进行加密并获取token
         String token = JwtHelper.createToken(Long.valueOf(saftUser.getUid()));
         //6.返回用户登录态
-        request.getSession().setAttribute(Result.ok(saftUser).getMessage(), saftUser);
+//        request.getSession().setAttribute(Result.ok(saftUser).getMessage(), saftUser);
         return token;
     }
 
@@ -66,7 +67,7 @@ public class NewsUserServiceImpl extends ServiceImpl<NewsUserMapper, NewsUser>
      * @return
      */
     @Override
-    public NewsUser getUserInfo(HttpServletRequest request) {
+    public NewsUserInfoRequest getUserInfo(HttpServletRequest request) {
         //1.根据token获取用户id
         Long userId = JwtHelper.getUserId(request.getHeader("token"));
         QueryWrapper<NewsUser> queryWrapper = new QueryWrapper<>();
@@ -77,9 +78,13 @@ public class NewsUserServiceImpl extends ServiceImpl<NewsUserMapper, NewsUser>
             throw new BusinessException(ResultCodeEnum.NOTLOGIN.getMessage(), ResultCodeEnum.NOTLOGIN.getCode(), "用户信息获取失败,请检查用户是否登录");
         }
         //3.用户脱敏
-        NewsUser saftUser = getSaftyUser(newsUser);
+        NewsUserInfoRequest newsUserInfoRequest = new NewsUserInfoRequest();
+        newsUserInfoRequest.setNickName(newsUser.getNick_name());
+        newsUserInfoRequest.setUid(newsUser.getUid());
+        newsUserInfoRequest.setUsername(newsUserInfoRequest.getUsername());
+        newsUserInfoRequest.setUserPwd("");
         //返回用户信息
-        return saftUser;
+        return newsUserInfoRequest;
     }
 
     /**

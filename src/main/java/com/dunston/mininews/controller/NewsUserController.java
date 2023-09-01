@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.dunston.mininews.common.Result;
 import com.dunston.mininews.common.ResultCodeEnum;
 import com.dunston.mininews.domain.NewsUser;
+import com.dunston.mininews.domain.request.NewsUserInfoRequest;
 import com.dunston.mininews.domain.request.NewsUserLoginRequest;
 import com.dunston.mininews.domain.request.NewsUserRegisterRequest;
 import com.dunston.mininews.service.NewsUserService;
@@ -70,13 +71,13 @@ public class NewsUserController {
             return Result.build(null, ResultCodeEnum.NOTLOGIN);
         }
         //2.根据token获取用户信息
-        NewsUser loginUser = newsUserService.getUserInfo(request);
+        NewsUserInfoRequest userInfo = newsUserService.getUserInfo(request);
         //3.将用户信息封装为json
-        Object json = JSON.toJSON(loginUser);
+        Object json = JSON.toJSON(userInfo);
         //4.用map封装json
-        Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("loginUser", json);
-        return Result.ok(userInfo);
+        Map<String, Object> userInfoMap = new HashMap<>();
+        userInfoMap.put("loginUser", json);
+        return Result.ok(userInfoMap);
     }
 
     /**

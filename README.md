@@ -18,8 +18,26 @@ MySQL 8.0
 - Mybatis
 - Mybatis-plus 3.5.3.1
 ## 加密方式
+- JWT
 - MD5
 ## 项目构建工具
 - Gradle
 ## 日志
 - Slf4j
+## 异常处理
+- 全局异常处理类
+
+## Gradle项目依赖
+```implementation 'org.springframework.boot:spring-boot-starter-web'
+compileOnly 'org.projectlombok:lombok'
+developmentOnly 'org.springframework.boot:spring-boot-devtools'
+runtimeOnly 'com.mysql:mysql-connector-j'
+annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+annotationProcessor 'org.projectlombok:lombok'
+testImplementation 'org.springframework.boot:spring-boot-starter-test'
+implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.1'
+implementation 'com.alibaba:fastjson:1.2.47'
+implementation 'io.jsonwebtoken:jjwt:0.6.0'
+implementation 'org.apache.commons:commons-lang3:3.12.0'
+implementation 'javax.xml.bind:jaxb-api:2.3.1'
+```

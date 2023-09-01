@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 用户控制层
+ * 用户逻辑层
  *
  * @author dunston
  */

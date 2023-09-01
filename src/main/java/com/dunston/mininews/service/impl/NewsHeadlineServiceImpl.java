@@ -3,15 +3,19 @@ package com.dunston.mininews.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dunston.mininews.common.ResultCodeEnum;
 import com.dunston.mininews.domain.NewsHeadline;
 import com.dunston.mininews.domain.NewsType;
-import com.dunston.mininews.domain.request.NewsHeadlineRequest;
-import com.dunston.mininews.domain.request.NewsPageData;
-import com.dunston.mininews.domain.request.NewsPageRequest;
+import com.dunston.mininews.domain.NewsUser;
+import com.dunston.mininews.domain.request.*;
+import com.dunston.mininews.exception.BusinessException;
 import com.dunston.mininews.mapper.NewsTypeMapper;
+import com.dunston.mininews.mapper.NewsUserMapper;
 import com.dunston.mininews.service.NewsHeadlineService;
 import com.dunston.mininews.mapper.NewsHeadlineMapper;
+import com.dunston.mininews.utils.JwtHelper;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +34,8 @@ public class NewsHeadlineServiceImpl extends ServiceImpl<NewsHeadlineMapper, New
     NewsHeadlineMapper headlineMapper;
     @Resource
     NewsTypeMapper typeMapper;
+    @Resource
+    NewsUserMapper userMapper;
 
     /**
      * 根据条件获取新闻
@@ -129,6 +135,153 @@ public class NewsHeadlineServiceImpl extends ServiceImpl<NewsHeadlineMapper, New
         newsHeadlineRequest.setPublisher(newsHeadline.getPublisher().intValue() + "");
         newsHeadlineRequest.setAuthor(newsHeadlineRequest.getAuthor());
         return newsHeadlineRequest;
+    }
+
+    /**
+     * 发布新闻
+     *
+     * @param newsPublishRequest
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean publish(NewsPublishRequest newsPublishRequest, HttpServletRequest request) {
+        String token = request.getHeader("token");
+        boolean expiration = JwtHelper.isExpiration(token);
+        if (expiration) {
+            throw new BusinessException(ResultCodeEnum.NOTLOGIN.getMessage(), ResultCodeEnum.NOTLOGIN.getCode(), "用户已经过期");
+        }
+        Long userId = JwtHelper.getUserId(token);
+        QueryWrapper<NewsUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid", userId);
+        NewsUser newsUser = userMapper.selectOne(queryWrapper);
+        NewsHeadline newsHeadline = publishHeadline(newsPublishRequest, newsUser);
+        int insert = headlineMapper.insert(newsHeadline);
+        if (insert == 0) {
+            throw new BusinessException("发布错误", 400000, "新闻发布错误请检查");
+        }
+        return true;
+    }
+
+    /**
+     * 通过新闻id查找新闻
+     *
+     * @param hid
+     * @param request
+     * @return
+     */
+    @Override
+    public NewsFindHeadlineRequest findHeadlineByHid(String hid, HttpServletRequest request) {
+        String subHid = hid.substring(4);
+        QueryWrapper<NewsHeadline> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("hid", subHid);
+        NewsHeadline newsHeadline = headlineMapper.selectOne(queryWrapper);
+        NewsFindHeadlineRequest headline = findHeadline(newsHeadline);
+        return headline;
+    }
+
+    /**
+     * 发布头条新闻
+     *
+     * @param newsPublishRequest
+     * @param newsUser
+     * @return
+     */
+    public NewsHeadline publishHeadline(NewsPublishRequest newsPublishRequest, NewsUser newsUser) {
+        NewsHeadline newsHeadline = new NewsHeadline();
+        newsHeadline.setPublisher(newsUser.getUid());
+        newsHeadline.setType(Integer.parseInt(newsPublishRequest.getType()));
+        newsHeadline.setTitle(newsPublishRequest.getTitle());
+        newsHeadline.setCreate_time(new Date());
+        newsHeadline.setUpdate_time(new Date());
+        newsHeadline.setIs_deleted(0);
+        newsHeadline.setArticle(newsPublishRequest.getArticle());
+        return newsHeadline;
+    }
+
+    /**
+     * 封装请求
+     *
+     * @param newsHeadline
+     * @return
+     */
+    public NewsFindHeadlineRequest findHeadline(NewsHeadline newsHeadline) {
+        NewsFindHeadlineRequest newsFindHeadlineRequest = new NewsFindHeadlineRequest();
+        newsFindHeadlineRequest.setHid(newsHeadline.getHid().intValue() + "");
+        newsFindHeadlineRequest.setArticle(newsHeadline.getArticle());
+        newsFindHeadlineRequest.setTitle(newsHeadline.getTitle());
+        newsFindHeadlineRequest.setType(newsHeadline.getType().intValue() + "");
+        return newsFindHeadlineRequest;
+    }
+
+    /**
+     * 更新新闻
+     *
+     * @param newsFindHeadlineRequest
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean update(NewsFindHeadlineRequest newsFindHeadlineRequest, HttpServletRequest request) {
+        String token = request.getHeader("token");
+        boolean expiration = JwtHelper.isExpiration(token);
+        if (expiration) {
+            throw new BusinessException(ResultCodeEnum.NOTLOGIN.getMessage(), ResultCodeEnum.NOTLOGIN.getCode(), "用户已经过期");
+        }
+        Long userId = JwtHelper.getUserId(token);
+        QueryWrapper<NewsUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("uid", userId);
+        NewsUser newsUser = userMapper.selectOne(queryWrapper);
+        NewsHeadline newsHeadline = updateHeadline(newsFindHeadlineRequest, newsUser);
+        int insert = headlineMapper.insert(newsHeadline);
+        if (insert == 0) {
+            throw new BusinessException("发布错误", 400000, "新闻修改错误请检查");
+        }
+        return true;
+    }
+
+    /**
+     * 更新头条
+     *
+     * @param newsFindHeadlineRequest
+     * @param newsUser
+     * @return
+     */
+    @Override
+    public NewsHeadline updateHeadline(NewsFindHeadlineRequest newsFindHeadlineRequest, NewsUser newsUser) {
+        NewsHeadline newsHeadline = new NewsHeadline();
+        newsHeadline.setPublisher(newsUser.getUid());
+        newsHeadline.setType(Integer.parseInt(newsFindHeadlineRequest.getType()));
+        newsHeadline.setTitle(newsFindHeadlineRequest.getTitle());
+        newsHeadline.setCreate_time(new Date());
+        newsHeadline.setUpdate_time(new Date());
+        newsHeadline.setIs_deleted(0);
+        newsHeadline.setArticle(newsFindHeadlineRequest.getArticle());
+        return newsHeadline;
+    }
+
+    /**
+     * 删除头条
+     *
+     * @param hid
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean delete(String hid, HttpServletRequest request) {
+        String subHid = hid.substring(4);
+        String token = request.getHeader("token");
+        boolean expiration = JwtHelper.isExpiration(token);
+        if (expiration) {
+            throw new BusinessException(ResultCodeEnum.NOTLOGIN.getMessage(), ResultCodeEnum.NOTLOGIN.getCode(), "用户已经过期");
+        }
+        QueryWrapper<NewsHeadline> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("hid", subHid);
+        int delete = headlineMapper.delete(queryWrapper);
+        if (delete == 0) {
+            throw new BusinessException("未查询到指定新闻", 400002, "请检查新闻是否存在");
+        }
+        return true;
     }
 }
 

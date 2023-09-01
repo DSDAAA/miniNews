@@ -2,9 +2,9 @@ package com.dunston.mininews.service;
 
 import com.dunston.mininews.domain.NewsHeadline;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dunston.mininews.domain.request.NewsHeadlineRequest;
-import com.dunston.mininews.domain.request.NewsPageData;
-import com.dunston.mininews.domain.request.NewsPageRequest;
+import com.dunston.mininews.domain.NewsUser;
+import com.dunston.mininews.domain.request.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -45,4 +45,43 @@ public interface NewsHeadlineService extends IService<NewsHeadline> {
      * @return
      */
     NewsHeadlineRequest getModelShowNews(NewsHeadline newsHeadline);
+
+    /**
+     * 新闻发布
+     *
+     * @param newsPublishRequest
+     * @param request
+     * @return
+     */
+    Boolean publish(NewsPublishRequest newsPublishRequest, HttpServletRequest request);
+
+    /**
+     * 新闻完整信息查询
+     *
+     * @param hid
+     * @param request
+     * @return
+     */
+    NewsFindHeadlineRequest findHeadlineByHid(String hid, HttpServletRequest request);
+
+    /**
+     * @param newsFindHeadlineRequest
+     * @return
+     */
+    Boolean update(NewsFindHeadlineRequest newsFindHeadlineRequest, HttpServletRequest request);
+
+    /**
+     * @param newsFindHeadlineRequest
+     * @param newsUser
+     * @return
+     */
+    NewsHeadline updateHeadline(NewsFindHeadlineRequest newsFindHeadlineRequest, NewsUser newsUser);
+
+    /**
+     *
+     * @param hid
+     * @param request
+     * @return
+     */
+    Boolean delete(String hid, HttpServletRequest request);
 }

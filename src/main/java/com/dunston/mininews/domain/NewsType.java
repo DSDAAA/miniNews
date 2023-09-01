@@ -28,6 +28,12 @@ public class NewsType implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 比较
+     *
+     * @param that
+     * @return
+     */
     @Override
     public boolean equals(Object that) {
         if (this == that) {

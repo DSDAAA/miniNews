@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 新闻类型控制层
+ * 新闻类型逻辑层
  *
  * @author dunston
  */

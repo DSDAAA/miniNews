@@ -101,6 +101,13 @@ public class NewsUserController {
         return Result.ok(null);
     }
 
+    /**
+     * 注册用户信息
+     *
+     * @param newsUserRegisterRequest
+     * @param request
+     * @return
+     */
     @PostMapping("/regist")
     public Result regist(@RequestBody NewsUserRegisterRequest newsUserRegisterRequest, @Autowired HttpServletRequest request) {
         //1.获取用户信息
@@ -127,6 +134,21 @@ public class NewsUserController {
         }
         //5.用户注册
         newsUserService.regist(username, password, nickName, request);
+        return Result.ok(null);
+    }
+
+    /**
+     * 验证登录状态
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/checkLogin")
+    public Result checkLogin(@Autowired HttpServletRequest request) {
+        Boolean isLogin = newsUserService.checkLogin(request);
+        if (!isLogin) {
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);
+        }
         return Result.ok(null);
     }
 }

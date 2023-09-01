@@ -59,6 +59,12 @@ public class NewsUserServiceImpl extends ServiceImpl<NewsUserMapper, NewsUser>
         return token;
     }
 
+    /**
+     * 获取用户信息
+     *
+     * @param request
+     * @return
+     */
     @Override
     public NewsUser getUserInfo(HttpServletRequest request) {
         //1.根据token获取用户id
@@ -184,6 +190,25 @@ public class NewsUserServiceImpl extends ServiceImpl<NewsUserMapper, NewsUser>
             throw new BusinessException(ResultCodeEnum.NOTLOGIN.getMessage(), ResultCodeEnum.NOTLOGIN.getCode(), "用户注册失败");
         }
         return newUser;
+    }
+
+    /**
+     * 验证登录
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean checkLogin(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        if (token == null) {
+            throw new BusinessException(ResultCodeEnum.NOTLOGIN.getMessage(), ResultCodeEnum.NOTLOGIN.getCode(), "用户未登录");
+        }
+        boolean expiration = JwtHelper.isExpiration(token);
+        if (expiration) {
+            throw new BusinessException(ResultCodeEnum.NOTLOGIN.getMessage(), ResultCodeEnum.NOTLOGIN.getCode(), "用户已经过期");
+        }
+        return true;
     }
 }
 

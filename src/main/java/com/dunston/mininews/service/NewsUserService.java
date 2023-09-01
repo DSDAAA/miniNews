@@ -57,4 +57,6 @@ public interface NewsUserService extends IService<NewsUser> {
      * @return
      */
     public NewsUser regist(String username, String userPwd, String nickName, HttpServletRequest request);
+
+    public Boolean checkLogin(HttpServletRequest request);
 }

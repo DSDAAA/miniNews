@@ -4,6 +4,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public final class MD5Util {
+    /**
+     * 加密
+     *
+     * @param strSrc
+     * @return
+     */
     public static String encrypt(String strSrc) {
         try {
             char hexChars[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8',

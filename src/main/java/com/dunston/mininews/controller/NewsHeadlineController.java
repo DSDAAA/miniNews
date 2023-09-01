@@ -1,8 +1,6 @@
 package com.dunston.mininews.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dunston.mininews.common.Result;
-import com.dunston.mininews.domain.NewsHeadline;
 import com.dunston.mininews.domain.request.NewsHeadlineRequest;
 import com.dunston.mininews.domain.request.NewsPageData;
 import com.dunston.mininews.domain.request.NewsPageRequest;
@@ -51,6 +49,10 @@ public class NewsHeadlineController {
         return Result.ok(data);
     }
 
+    /**
+     * @param hid
+     * @return
+     */
     @PostMapping("/showHeadlineDetail")
     public Result showHeadlineDetail(@RequestBody String hid) {
         //处理hid
